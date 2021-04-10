@@ -7,7 +7,7 @@ namespace Task1
         static void Main(string[] args)
         {
              new HomeWork().InvokePriceCalculatiion();
-            Console.ReadKey();
+             Console.ReadKey(true);
            
         }
     }
