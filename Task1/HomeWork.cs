@@ -17,34 +17,29 @@ namespace Task1
                                     IEnumerable<string> currencies)
         {
             decimal fullPrice = default;         
-            string street = "";
+            var street = String.Empty;
             decimal extraDicsount = 1;
-            if (destinations.Count() != clients.Count() && prices.Count() != currencies.Count())
-            {
+            if (destinations.Count() != clients.Count() && prices.Count() != currencies.Count())  
                 return fullPrice;
-            }
-
+            
                 for (int x = 0; x < destinations.Count(); x++) 
                 {
-                    decimal waynStreet = destinations.ElementAt(x).Contains("Wayne Street") ? 10 : 0;
-                    decimal northStreet = destinations.ElementAt(x).Contains("North Heather Street") ? -5.36m : 0;
-                    decimal currency = currencies.ElementAt(x).Contains("EUR") ? 1.19m : 1;
-
+                    var waynStreet = destinations.ElementAt(x).Contains("Wayne Street") ? 10m : 0;
+                    var northStreet = destinations.ElementAt(x).Contains("North Heather Street") ? -5.36m : 0;
+                    var currency = currencies.ElementAt(x).Contains("EUR") ? 1.19m : 1;
                     var tempforInfants = infantsIds.Where(y => y == x);
-                    decimal discountForInfants = tempforInfants.Any() ? 0.5m : 1;
+                    var discountForInfants = tempforInfants.Any() ? 0.5m : 1;
                     var tempforChildren = childrenIds.Where(y => y == x);
-                    decimal discountForchildren = tempforChildren.Any() ? 0.25m : 1;
-                    int start = destinations.ElementAt(x).IndexOf(' ');
-                    int end = destinations.ElementAt(x).IndexOf(',') - 1;
-
-                        string nextstreet = destinations.ElementAt(x).Substring(start, end);
+                    var discountForchildren = tempforChildren.Any() ? 0.25m : 1;
+                    var start = destinations.ElementAt(x).IndexOf(' ');
+                    var end = destinations.ElementAt(x).IndexOf(',') - 1;
+                    var nextstreet = destinations.ElementAt(x).Substring(start, end);
                         if (nextstreet == street)
                             extraDicsount = 0.15m;
                         extraDicsount = 1;
 
-                     street = destinations.ElementAt(x).Substring(start, end);
+                    street = destinations.ElementAt(x).Substring(start, end);
                     fullPrice += (prices.ElementAt(x) + waynStreet + northStreet) * extraDicsount * currency * discountForchildren * discountForInfants;
-
                 }
             
             Console.WriteLine(fullPrice);
