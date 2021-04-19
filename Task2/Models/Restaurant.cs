@@ -8,10 +8,10 @@ namespace Task2.Models
 {
    public class Restaurant
    {
-        public int RestaurantID { get; set; }
-        public string NameOfRestaurant { get; set; }
-        public string AddressOfRestaurant{ get; set; }
-        public string CellPhoneNumberOfRestaurant { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Address{ get; set; }
+        public string CellPhone { get; set; }
 
         public ICollection<Meal> Meals { get; set; }
         public Restaurant()

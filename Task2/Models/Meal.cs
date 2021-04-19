@@ -8,8 +8,8 @@ namespace Task2.Models
 {
     public class Meal
     {
-        public int MealID { get; set; }
-        public string NameOfMeal { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
         public decimal Price { get; set; }
         public decimal Discount { get; set; }
         public int? RestaurantID { get; set; }
