@@ -7,10 +7,10 @@ using Task2.Models;
 
 namespace Task2.BLL
 {
-    public class RestaurantBuilder
+    public class RestaurantBuilder : ICreatable
     {
-        
-        public Restaurant CreateRestaurant()
+       
+        public object Create()
         {
             Restaurant NewRestaurant = new Restaurant();
             while (true)
@@ -28,7 +28,7 @@ namespace Task2.BLL
                 NewRestaurant.Address = Console.ReadLine();
                 if (String.IsNullOrEmpty(NewRestaurant.Address))
                 {
-                    Console.WriteLine("Address can not be Empy");
+                    Console.WriteLine("Address can not be Empty");
                     continue;
                 }
                 Console.WriteLine("Please input CellPhone, use format - 809........ and press Enter");
@@ -46,5 +46,6 @@ namespace Task2.BLL
             }
             
         }
+
     }
 }

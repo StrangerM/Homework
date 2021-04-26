@@ -7,10 +7,18 @@ using Task2.Models;
 
 namespace Task2.BLL
 {
-    public class BuyerBuilder
+    public class BuyerBuilder : ICreatable, IRepository
     {
-        
-        public Buyer CreateBuyer()
+        IList<Buyer> listBuyers;
+
+
+        public BuyerBuilder() 
+        {
+            listBuyers = new List<Buyer>();
+            FillInLists();
+        }
+
+        public object Create()
         {
             Buyer NewBuyer = new Buyer();
             while (true)
@@ -53,5 +61,45 @@ namespace Task2.BLL
             }
 
         }
+
+        public void FillInLists(string role)
+        {
+                MealBuilder mealBuilder = MealBuilder.GetInstance();
+                BuyerBuilder buyerBuilder = new BuyerBuilder();
+            if (role == "1")
+            {
+                try
+                {
+                    var buyer = (Buyer)buyerBuilder.Create();
+                    buyer.Id = listBuyers.Count();
+                    mealBuilder.DisplayMeal();
+                    Console.WriteLine("Please choose some meal using their Id, divide them by coma and press Enter, For example: 1,4,6");
+                    var order = Console.ReadLine();
+                    var orderedList = mealBuilder.CreateOrderingList(order);
+                    var result = mealBuilder.PushOrder(orderedList);
+                    if (!result)
+                        Console.WriteLine("Please choose only available meal");
+                }
+                catch (Exception x)
+                {
+                    Console.WriteLine(x.Message);
+                }
+            }
+         
+        }
+
+        public void FillInLists()
+        {
+            listBuyers.Add(new Buyer
+            {
+                Id = 0,
+                Name = "Ivan",
+                LastName = "Pupkin",
+                Address = "Zankovetska st. 27",
+                CellPhone = "8097654312",
+
+            });
+        }
+
     }
 }
