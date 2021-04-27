@@ -7,19 +7,19 @@ using Task2.BLL;
 
 namespace Task2.DI
 {
-    class DIContainer
+    public class DIContainer
     {
-        private readonly IRepository _service1;
+        private readonly IRepository _repository;
         
 
-        public DIContainer(IRepository service)
+        public DIContainer(IRepository repository)
         {
-            _service1 = service;
+            _repository = repository;
             
         }
         public void InitiateServiceMethods(string data)
         {
-            _service1.FillInLists(data);
+            _repository.FillInLists(data);
             
         }
     }

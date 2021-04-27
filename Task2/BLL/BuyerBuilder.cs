@@ -7,7 +7,7 @@ using Task2.Models;
 
 namespace Task2.BLL
 {
-    public class BuyerBuilder : ICreatable, IRepository
+    public class BuyerBuilder :  IRepository
     {
         IList<Buyer> listBuyers;
 
@@ -24,39 +24,39 @@ namespace Task2.BLL
             while (true)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("Before to order of meal needs to fill in some data");
-                Console.WriteLine("Please input your Name  and press Enter");
-                NewBuyer.Name = Console.ReadLine();
-                if (String.IsNullOrEmpty(NewBuyer.Name))
+                Logger.DisplayData("Before to order of meal needs to fill in some data");
+                Logger.DisplayData("Please input your Name  and press Enter");
+                NewBuyer.Name = Logger.ReadData();
+                if (Validator.ConvertTo(NewBuyer.Name))
                 {
-                    Console.WriteLine("Name can not be Empty");
+                    Logger.DisplayData("Name can not be Empty");
                     continue;
                 }
-                Console.WriteLine("Please input your Last Name  and press Enter");
-                NewBuyer.LastName = Console.ReadLine();
-                if (String.IsNullOrEmpty(NewBuyer.LastName))
+                Logger.DisplayData("Please input your Last Name  and press Enter");
+                NewBuyer.LastName = Logger.ReadData();
+                if (Validator.ConvertTo(NewBuyer.LastName))
                 {
-                    Console.WriteLine("Last Name can not be Empty");
+                    Logger.DisplayData("Last Name can not be Empty");
                     continue;
                 }
-                Console.WriteLine("Please input your Address and press Enter");
-                NewBuyer.Address = Console.ReadLine();
-                if (String.IsNullOrEmpty(NewBuyer.Address))
+                Logger.DisplayData("Please input your Address and press Enter");
+                NewBuyer.Address = Logger.ReadData();
+                if (Validator.ConvertTo(NewBuyer.Address))
                 {
-                    Console.WriteLine("Address can not be Empty");
+                    Logger.DisplayData("Address can not be Empty");
                     continue;
                 }
-                Console.WriteLine("Please input your CellPhone, use format - 809........ and press Enter");
-                var cellPhone = Console.ReadLine();
-                var temp = 0;
-                if (!Int32.TryParse(cellPhone, out temp))
+                Logger.DisplayData("Please input your CellPhone, use format - 809........ and press Enter");
+                var cellPhone = Logger.ReadData();
+                int temp = 0;
+                if (!Validator.ConvertTo(cellPhone, out temp))
                 {
-                    Console.WriteLine("Please input number in the correct format");
+                    Logger.DisplayData("Please input number in the correct format");
                     continue;
                 }
                 NewBuyer.CellPhone = temp.ToString();
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Now you can choose meal");
+                Logger.DisplayData("Now you can choose meal");
                 return NewBuyer;
             }
 
@@ -73,16 +73,16 @@ namespace Task2.BLL
                     var buyer = (Buyer)buyerBuilder.Create();
                     buyer.Id = listBuyers.Count();
                     mealBuilder.DisplayMeal();
-                    Console.WriteLine("Please choose some meal using their Id, divide them by coma and press Enter, For example: 1,4,6");
-                    var order = Console.ReadLine();
+                    Logger.DisplayData("Please choose some meal using their Id, divide them by coma and press Enter, For example: 1,4,6");
+                    var order = Logger.ReadData();
                     var orderedList = mealBuilder.CreateOrderingList(order);
                     var result = mealBuilder.PushOrder(orderedList);
                     if (!result)
-                        Console.WriteLine("Please choose only available meal");
+                        Logger.DisplayData("Please choose only available meal");
                 }
                 catch (Exception x)
                 {
-                    Console.WriteLine(x.Message);
+                    Logger.DisplayData(x.Message);
                 }
             }
          

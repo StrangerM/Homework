@@ -7,11 +7,11 @@ using Task2.Models;
 
 namespace Task2.BLL
 {
-    public class MealBuilder : ICreatable, IRepository
+    public class MealBuilder : IRepository
     {
         IList<Meal> container;
 
-       private static readonly MealBuilder mealBuilder = new MealBuilder();
+        private static readonly MealBuilder mealBuilder = new MealBuilder();
 
         public MealBuilder() 
         {
@@ -25,36 +25,36 @@ namespace Task2.BLL
             while (true)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("Please add some meal");
-                Console.WriteLine("Please input  Name  and press Enter");
-                NewMeal.Name = Console.ReadLine();
-                if (String.IsNullOrEmpty(NewMeal.Name))
-                {
-                    Console.WriteLine("Name can not be Empty");
+                Logger.DisplayData("Please add some meal");
+                Logger.DisplayData("Please input  Name  and press Enter");
+                NewMeal.Name = Logger.ReadData();
+                if (Validator.ConvertTo(NewMeal.Name))
+                {  
+                    Logger.DisplayData("Name can not be Empty");
                     continue;
                 }
-                Console.WriteLine("Please input Price $ (only number) and press Enter. Use . separator if need");
-                
-                var price = Console.ReadLine();
+                Logger.DisplayData("Please input Price $ (only number) and press Enter. Use . separator if need");
+
+                var price = Logger.ReadData();
                 decimal temp = 0;
-                if (!decimal.TryParse(price, out temp))
-                {
-                    Console.WriteLine("Please input number in correct format");
+                if (!Validator.ConvertTo(price, out temp))
+                { 
+                    Logger.DisplayData("Please input number in correct format");
                     continue;
                 }
                 NewMeal.Price = temp;
-                Console.WriteLine("Please input Discount % (only number) if there is no discount -input - 0 and press Enter");
+               Logger.DisplayData("Please input Discount % (only number) if there is no discount -input - 0 and press Enter");
 
-                var dicount = Console.ReadLine();
-                var tempDiscount = 0;
-                if (!Int32.TryParse(dicount, out tempDiscount))
+                var dicount = Logger.ReadData();
+                int tempDiscount = 0;
+                if (!Validator.ConvertTo(dicount, out tempDiscount))
                 {
-                    Console.WriteLine("Please input number in correct format");
+                   Logger.DisplayData("Please input number in correct format");
                     continue;
                 }
                 NewMeal.Discount = tempDiscount;
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Your Meal was add to DB successfuly");
+                Logger.DisplayData("Your Meal was add to DB successfuly");
                 return NewMeal;
             }
 
@@ -67,7 +67,6 @@ namespace Task2.BLL
 
         public void FillInLists(string role)
         {
-
             if (role == "0")
             {
                 try
@@ -78,15 +77,15 @@ namespace Task2.BLL
                         var meal = (Meal)this.Create();
                         container.Add(meal);
                         meal.Id = container.Count() - 1;
-                        Console.WriteLine("If You wanna add another meal press - 1, if not press any button");
-                        var key = Console.ReadLine();
+                        Logger.DisplayData("If You wanna add another meal press - 1, if not press any button");
+                        var key = Logger.ReadData();
                         if (key != "1")
                             return;
                     }
                 }
                 catch (Exception x)
                 {
-                    Console.WriteLine(x.Message);
+                    Logger.DisplayData(x.Message);
                 }
             }
         }
@@ -106,12 +105,12 @@ namespace Task2.BLL
         public void DisplayMeal()
         {
             if (container.Count() == 0)
-                Console.WriteLine("Sorry, Now We do not have any meal");
+                Logger.DisplayData("Sorry, Now We do not have any meal");
             foreach (var item in container)
             {
                 var meal = String.Format("Id of meal - {0}, Name of meal - {1}, Price of meal - {2}$, Discount for meal - {3}%," +
                     " Id of restaurant - {4}", item.Id, item.Name, item.Price, item.Discount, item.RestaurantID);
-                Console.WriteLine(meal);
+                Logger.DisplayData(meal);
             }
 
         }
@@ -135,8 +134,8 @@ namespace Task2.BLL
                     price += (item.Discount / 100 * item.Price);
                 }
             }
-            Console.WriteLine("Your Order was created successfully");
-            Console.WriteLine("You chose " + name + " " + "And Sum to pay is" + " " + price.ToString());
+            Logger.DisplayData("Your Order was created successfully");
+            Logger.DisplayData("You chose " + name + " " + "And Sum to pay is" + " " + price.ToString());
             return true;
         }
 

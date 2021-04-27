@@ -11,11 +11,12 @@ namespace Task2
 {
     class Program
     {
+      
 
         public static void Main(string[] args)
         {
 
-            Console.WriteLine("Welome to the service");
+            Logger.DisplayData("Welome to the service");
 
             var containerForBuyer = new WindsorContainer();
 
@@ -24,18 +25,17 @@ namespace Task2
             containerForBuyer.Register(Component.For<IRepository>()
                              .ImplementedBy<BuyerBuilder>().LifestyleSingleton());
 
-            var buyer = containerForBuyer.Resolve<DIContainer>();
-
             var meal = MealBuilder.GetInstance();
+   
+            var buyer = containerForBuyer.Resolve<DIContainer>();
 
             while (true)
             {    
-                Console.WriteLine("If You wanna add meal - input - 0, order meal - 1");
-                var readData = Console.ReadLine();
+                Logger.DisplayData("If You wanna add meal - input - 0, order meal - 1");
+                var readData = Logger.ReadData();
                 buyer.InitiateServiceMethods(readData);
                 meal.FillInLists(readData);
                 Console.ForegroundColor = ConsoleColor.White;
-  
             } 
  
         }
